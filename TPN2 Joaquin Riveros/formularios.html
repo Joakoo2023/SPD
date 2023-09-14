@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios Trabajo Practico Nº2</title>
+    <style>
+        /* Estilos para las etiquetas sobre las barras de rango */
+        label.range-label {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h3>Formulario Carga de Datos</h3>
+    <form>
+        <fieldset>
+            <div>
+                <label for="Apellido">Apellido</label>             
+                <input type="text" id="Apellido" placeholder="Apellido...">   
+                <label for="Nombre">Nombre</label>
+                <input type="text" id="Nombre" placeholder="Nombre...">
+            </div>
+            <br> 
+            <div>
+                <label for="DNI">Nro DNI</label>
+                <input type="number" id="DNI" placeholder="DNI...">
+                <label for="Fecha de Nacimiento">Fecha de Nacimiento</label>
+                <input type="date" id="Fecha de Nacimiento" placeholder="Fecha de Nacimiento...">
+            </div>
+            <br>
+            <div>
+                <label for="Domicilio">Domicilio</label>             
+                <input type="text" id="Domicilio" placeholder="Domicilio...">   
+                <label for="Localidad">Localidad</label>
+                <input type="text" id="Localidad" placeholder="Localidad...">
+            </div>
+        </fieldset>
+    
+        <h4>Idiomas que conoce</h4>
+        <table>
+            <thead>
+                <th>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            <b>Nivel de Conocimiento</b>
+                        </td>
+                    </tr>   
+                </th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div>
+                            <label> Español </label>
+                            <input type="checkbox" name="lenguajes" value="Español" id="box1">
+                        </div>
+                    </td>  
+                    <td>
+                        <label for="barra1" class="range-label">0-------50-------100</label>
+                        <input type="range" min="0" max="100" id="barra1" data-idioma="Español">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <label> Inglés </label>
+                            <input type="checkbox" name="lenguajes" value="Inglés" id="box2">
+                        </div>
+                    </td>  
+                    <td>
+                        <label for="barra2" class="range-label">0-------50-------100</label>
+                        <input type="range" min="0" max="100" id="barra2" data-idioma="Inglés">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <label> Francés </label>
+                            <input type="checkbox" name="lenguajes" value="Francés" id="box3">
+                        </div>
+                    </td>
+                    <td>
+                        <label for="barra3" class="range-label">0-------50-------100</label>
+                        <input type="range" min="0" max="100" id="barra3" data-idioma="Francés">
+                    </td>  
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <label> Chino </label>
+                            <input type="checkbox" name="lenguajes" value="Chino" id="box4">
+                        </div>
+                    </td>
+                    <td>
+                        <label for="barra4" class="range-label">0-------50-------100</label>
+                        <input type="range" min="0" max="100" id="barra4" data-idioma="Chino">
+                    </td>  
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit"onclick="mostrarDatos()" style="border-radius: 10px; background-color: rgb(48, 95, 186); color: white; border: none; padding: 10px 20px; cursor: pointer;">Enviar</button>
+        <button type="reset" style="border-radius: 10px; background-color: rgb(48, 95, 186); color: white; border: none; padding: 10px 20px; cursor: pointer;">Borrar</button>
+    </form>
+    <script>
+        function mostrarDatos() {
+            // Obtener los valores de los campos del formulario.
+            var apellido = document.getElementById("Apellido").value;
+            var nombre = document.getElementById("Nombre").value;
+            var dni = document.getElementById("DNI").value;
+            var fechaNacimiento = document.getElementById("Fecha de Nacimiento").value;
+            var domicilio = document.getElementById("Domicilio").value;
+            var localidad = document.getElementById("Localidad").value;
+            
+            var idiomas = []; // Crear un array para almacenar los idiomas seleccionados.
+            var checkboxes = document.querySelectorAll('input[type="checkbox"][name="lenguajes"]:checked'); // Obtener todos los checkboxes con el atributo name="lenguajes" que estén marcados.
+            // Recorrer los checkboxes seleccionados y agregar sus valores al array idiomas.
+            for (var i = 0; i < checkboxes.length; i++) {
+                idiomas.push(checkboxes[i].value);
+            }
+            
+            var valoresBarras = []; // Crear un array para almacenar los valores de las barras de rango.
+            var barras = document.querySelectorAll('input[type="range"]'); // Obtener todas las barras de rango en el formulario.
+            // Obtener los valores de las barras solo para los idiomas seleccionados.
+            for (var i = 0; i < barras.length; i++) { // Recorrer todas las barras de rango
+                var idiomaRelacionado = barras[i].getAttribute("data-idioma"); // Obtener el idioma relacionado con cada barra de rango a través del atributo data-idioma.
+                if (idiomas.includes(idiomaRelacionado)) { // Verificar si el idioma relacionado está incluido en la lista de idiomas seleccionados.
+                    valoresBarras.push(barras[i].value); // Si está incluido, agregar el valor de la barra al array de valoresBarras.
+                }
+            }  
+
+            // Crear un mensaje con los datos obtenidos del formulario
+            var nombreCompleto = apellido + " " + nombre; 
+            var mensaje = "Datos del formulario:\n\n" +
+            "Nombre Completo: " + nombreCompleto + "\n" +
+            "Nro DNI: " + dni + "\n" +
+            "Fecha de Nacimiento: " + fechaNacimiento + "\n" +
+            "Domicilio: " + domicilio + "\n" +
+            "Localidad: " + localidad + "\n" +
+            "Idiomas: " + idiomas.join(", ") + "\n";
+            
+            // Agregar valores de las barras solo para los idiomas seleccionados.
+            if (valoresBarras.length > 0) {
+                mensaje += "Valores de las barras: " + valoresBarras.join(", ");
+            }
+            
+            alert(mensaje); // Mostrar el mensaje en un cuadro de diálogo de alerta.
+        }
+    </script>
+</body>
+</html>
